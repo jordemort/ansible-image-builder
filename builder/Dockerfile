@@ -12,6 +12,7 @@ RUN apt-get update && \
       dpkg-dev \
       dumb-init \
       libguestfs-tools \
+      mtree-netbsd \
       pigz \
       python3-dev \
       python3-pip \
