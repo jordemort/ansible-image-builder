@@ -1,0 +1,14 @@
+---
+- file:
+    state: absent
+    path: /mnt/cache/system.squashfs
+  when: clean_system_image
+
+- command:
+    argv:
+      - mksquashfs
+      - /mnt/cache/system
+      - /mnt/cache/system.squashfs
+      - -comp
+      - zstd
+    creates: /mnt/cache/system.squashfs

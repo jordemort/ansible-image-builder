@@ -1,0 +1,8 @@
+---
+- hosts: localhost
+  vars:
+    builder: "{{ lookup('env', 'BUILDER') | default('disk_image', true) }}"
+  tasks:
+    - name: "Builder {{ builder }}"
+      import_role:
+        name: "{{ builder }}"

@@ -1,0 +1,13 @@
+---
+all:
+
+  hosts:
+    localhost:
+      ansible_connection: local
+
+    system:
+      ansible_connection: chroot
+      ansible_host: /mnt/cache/system
+
+  vars:
+    ansible_python_interpreter: /usr/bin/python3

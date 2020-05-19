@@ -1,0 +1,16 @@
+---
+- file:
+    state: absent
+    path: /mnt/cache/{{ disk_image_name }}
+  when: clean_disk_image
+
+- name: Create {{ disk_image_name }}
+  command:
+    cmd: /usr/bin/guestfish
+    stdin: |
+      disk-create /mnt/cache/{{ disk_image_name }} raw {{ disk_image_size }} preallocation:sparse
+      add /mnt/cache/{{ disk_image_name }} readonly:false format:raw
+      run
+      part-disk /dev/sda mbr
+      mkfs vfat /dev/sda1
+    creates: /mnt/cache/{{ disk_image_name }}

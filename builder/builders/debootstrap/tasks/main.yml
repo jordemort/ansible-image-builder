@@ -1,0 +1,31 @@
+---
+- block:
+
+  - file:
+      state: absent
+      path: /mnt/cache/debootstrap
+
+  - file:
+      state: absent
+      path: /mnt/cache/debootstrap
+
+  when: clean_debootstrap
+
+- block:
+
+  - command:
+      argv:
+        - debootstrap
+        - --variant={{ debootstrap_variant }}
+        - --include={{ debootstrap_include }}
+        - "{{ debootstrap_suite }}"
+        - /mnt/cache/debootstrap
+        - "{{ debootstrap_mirror }}"
+      creates: /mnt/cache/debootstrap
+    environment: "{{ proxy_env }}"
+
+  - file:
+      state: touch
+      path: /mnt/cache/debootstrap.done
+
+  when: "'/mnt/cache/debootstrap.done' is not exists"

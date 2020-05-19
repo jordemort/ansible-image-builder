@@ -1,0 +1,16 @@
+version: "3.7"
+
+services:
+  builder:
+    hostname: ${BUILDER_HOSTNAME:-caketop-builder}
+    image: ${BUILDER_IMAGE:-caketop/caketop-builder}
+    build:
+      context: ./builder
+      args:
+        BUILDER_BASE_IMAGE: ${BUILDER_BASE_IMAGE:-debian:buster-slim}
+    volumes:
+      - cache:/mnt/cache
+      - .:/mnt/workdir
+
+volumes:
+  cache:
