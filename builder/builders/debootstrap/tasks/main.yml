@@ -1,19 +1,22 @@
 ---
 - block:
 
-  - file:
+  - name: Force rebuild of debootstrap
+    file:
       state: absent
-      path: /mnt/cache/debootstrap
-
-  - file:
-      state: absent
-      path: /mnt/cache/debootstrap
+      path: /mnt/cache/debootstrap.done
 
   when: clean_debootstrap
 
 - block:
 
-  - command:
+  - name: Clean debootstrap directory
+    file:
+      state: absent
+      path: /mnt/cache/debootstrap
+
+  - name: Run debootstrap
+    command:
       argv:
         - debootstrap
         - --variant={{ debootstrap_variant }}
@@ -24,7 +27,8 @@
       creates: /mnt/cache/debootstrap
     environment: "{{ proxy_env }}"
 
-  - file:
+  - name: Mark debootstrap as done
+    file:
       state: touch
       path: /mnt/cache/debootstrap.done
 
