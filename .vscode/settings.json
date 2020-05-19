@@ -1,0 +1,7 @@
+{
+  "files.associations": {
+    "builder/builders/**/*.yml": "ansible",
+    "builder/roles/**/*.yml": "ansible",
+    "roles/**/*.yml": "ansible"
+  }
+}
