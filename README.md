@@ -50,3 +50,19 @@ Caketop OS is a live image based on Debian.
  - [ ] Publish builder on Docker Hub
  - [ ] VS Code stuff / devcontainer
  - [ ] Better builder CLI
+
+## Dev log
+
+### 2020-05-19
+
+- Re: splash screen/seamless transition
+  - Discovered that syslinux doesn't have an equivalent to GRUB2's [gfxpayload](https://www.gnu.org/software/grub/manual/grub/html_node/gfxpayload.html) - bootloader will need to be GRUB2 for seamless transition from bootloader to splash screen to desktop.
+  - Need to investigate differences between Plymouth in Ubuntu and Plymouth in Debian and possibly build the Ubuntu version of it.
+
+- Original plan was to use xorg + steamos-compositor and then put off doing a custom Wayland compositor until a version 2, but it looks like Qt5 makes whipping up a custom Wayland compositor [dead-ass easy](https://doc.qt.io/qt-5/qtwaylandcompositor-index.html) so I think we're going Wayland from the start.
+
+- Leaving this here to raid for ideas re: containerized application runtime: https://github.com/mviereck/x11docker
+
+- Re: Android
+  - https://www.collabora.com/news-and-blog/blog/2019/04/01/running-android-next-to-wayland/
+  - https://gitlab.collabora.com/spurv
