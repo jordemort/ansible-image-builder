@@ -1,5 +1,7 @@
 ---
 - hosts: localhost
+  any_errors_fatal: true
+  gather_facts: false
   vars:
     builder: "{{ lookup('env', 'BUILDER') | default('disk_image', true) }}"
   tasks:
