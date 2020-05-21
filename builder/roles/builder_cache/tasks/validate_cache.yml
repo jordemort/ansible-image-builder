@@ -1,5 +1,5 @@
 ---
-- import_tasks: invalidate_cache.yml
+- include_tasks: invalidate_cache.yml
   when: force_clean or (not dependencies_cached) or (artifact_path is not exists) or (checksum_path is not exists)
 
 - name: Validate checksum for {{ cache_key }}
@@ -8,18 +8,8 @@
       slurp:
         src: "{{ checksum_path }}"
       register: cached_checksum
-    - import_tasks: calculate_checksum.yml
+    - include_tasks: calculate_checksum.yml
     - name: Invalidate cache for {{ cache_key }}
-      import_tasks: invalidate_cache.yml
+      include_tasks: invalidate_cache.yml
       when: (cached_checksum['content'] | b64decode | trim) != lookup('vars', checksum_var)
   when: checksum_path is exists
-
-- name: Record status of {{ cache_key }} cache
-  set_fact:
-    "{{ cached_var }}": "{{ checksum_path is exists }}"
-
-- debug:
-    var: "{{ cached_var }}"
-
-- debug:
-    var: "{{ checksum_var }}"

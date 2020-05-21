@@ -1,4 +1,0 @@
----
-clean_system: "{{ lookup('env', 'CLEAN_SYSTEM') | default(false, true) | bool }}"
-os_role: "{{ lookup('env', 'OS_ROLE') | default('caketop', true) }}"
-proxy_env:

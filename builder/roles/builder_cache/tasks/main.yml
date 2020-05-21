@@ -2,6 +2,10 @@
 - name: Check cache_action
   fail:
     msg: Invalid cache action
-  when: (cache_action is undefined) or ((cache_action != 'validate') and (cache_action != 'update'))
+  when: (cache_action is undefined) or ((cache_action != 'validate') and (cache_action != 'invalidate') and (cache_action != 'update'))
 
-- import_tasks: "{{ cache_action }}_cache.yml"
+- include_tasks: "{{ cache_action }}_cache.yml"
+
+- name: Record status of {{ cache_key }} cache
+  set_fact:
+    "{{ cached_var }}": "{{ checksum_path is exists }}"

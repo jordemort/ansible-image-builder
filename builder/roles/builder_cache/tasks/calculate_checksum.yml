@@ -1,7 +1,4 @@
 ---
-- debug:
-    var: cache_variables
-
 - name: Calculate current checksum for {{ cache_key }}
   command:
     argv:

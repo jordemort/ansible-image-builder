@@ -1,23 +1,30 @@
 ---
-- import_role:
+- include_role:
     name: builder_cache
-  vars:
-    cache_action: validate
+    apply:
+      vars:
+        cache_action: validate
 
 - block:
+  - include_role:
+      name: start_acng
+    when: not (acng_started | default(false))
+
   - name: Run debootstrap
     command:
       argv:
         - debootstrap
-        - --variant={{ debootstrap_variant }}
-        - --include={{ debootstrap_include }}
+        - --variant=minbase
+        - --include=ca-certificates,python3-minimal,python3-apt
         - "{{ debootstrap_suite }}"
         - /mnt/cache/debootstrap
         - "{{ debootstrap_mirror }}"
       creates: /mnt/cache/debootstrap
     environment: "{{ proxy_env }}"
-  - import_role:
+
+  - include_role:
       name: builder_cache
-    vars:
-      cache_action: update
+      apply:
+        vars:
+          cache_action: update
   when: not debootstrap_cached

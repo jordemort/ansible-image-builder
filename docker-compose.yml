@@ -11,6 +11,8 @@ services:
     volumes:
       - cache:/mnt/cache
       - .:/mnt/workdir
+      - ./builder/builders:/usr/lib/caketop-builder/ansible/builders
+      - ./builder/roles:/usr/lib/caketop-builder/ansible/roles
 
 volumes:
   cache:

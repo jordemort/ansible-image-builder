@@ -1,0 +1,2 @@
+---
+cache_variables: "{{ os_role }}"
