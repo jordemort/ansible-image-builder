@@ -1,0 +1,4 @@
+---
+dependencies:
+  - role: debootstrap
+    when: not (debootstrap_done | default(false))

@@ -1,2 +1,10 @@
 ---
+- name: Install packages
+  apt:
+    package: "{{ os_packages + lookup('vars', os_architecture + '_packages', default=[]) }}"
+    state: present
+    update_cache: true
+    install_recommends: false
+    autoclean: true
+
 - command: dpkg-query --list

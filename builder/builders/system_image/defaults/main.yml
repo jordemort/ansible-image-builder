@@ -1,2 +1,0 @@
----
-clean_system_image: "{{ lookup('env', 'CLEAN_SYSTEM_IMAGE') | default(false, true) | bool }}"

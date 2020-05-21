@@ -1,0 +1,20 @@
+---
+- import_role:
+    name: builder_cache
+  vars:
+    cache_action: validate
+
+- block:
+  - command:
+      argv:
+        - mksquashfs
+        - /mnt/cache/rootfs
+        - /mnt/cache/squashfs
+        - -comp
+        - zstd
+
+  - import_role:
+      name: builder_cache
+    vars:
+      cache_action: update
+  when: not squashfs_cached

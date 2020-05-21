@@ -1,7 +1,0 @@
----
-- include_tasks: calculate_checksum.yml
-
-- name: Persist checksum for {{ cache_key }}
-  copy:
-    dest: "{{ checksum_path }}"
-    content: "{{ lookup('vars', checksum_var) }}"

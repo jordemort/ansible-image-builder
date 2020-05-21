@@ -1,0 +1,16 @@
+---
+- name: Mark {{ cache_key }} as not done or cached
+  set_fact:
+    "{{ cached_var }}": false
+    "{{ done_var }}": false
+
+- name: Remove cached artifacts for {{ cache_key }}
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop: "{{ artifacts }}"
+
+- name: Remove cached checksum for {{ cache_key }}
+  file:
+    path: "{{ checksum_path }}"
+    state: absent

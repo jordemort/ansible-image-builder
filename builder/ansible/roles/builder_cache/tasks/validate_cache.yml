@@ -1,0 +1,30 @@
+---
+- name: Start checking dependencies for {{ cache_key }}
+  set_fact:
+    all_dependencies_cached: true
+
+- name: Check dependencies for {{ cache_key }}
+  set_fact:
+    all_dependencies_cached: "{{ all_dependencies_cached and lookup('vars', item + '_cached', default=false) }}"
+  loop: "{{ cache_dependencies }}"
+
+- include_tasks: invalidate_cache.yml
+  when: force_clean or (not all_dependencies_cached) or (checksum_path is not exists)
+
+- name: Validate checksum for {{ cache_key }}
+  block:
+    - name: Load cached checksum for {{ cache_key }}
+      slurp:
+        src: "{{ checksum_path }}"
+      register: cached_checksum
+    - include_tasks: calculate_checksum.yml
+    - name: Invalidate cache for {{ cache_key }}
+      include_tasks: invalidate_cache.yml
+      when: (cached_checksum['content'] | b64decode | trim) != lookup('vars', checksum_var)
+  when: checksum_path is exists
+
+- name: Mark {{ cache_key }} as done and cached
+  set_fact:
+    "{{ cached_var }}": true
+    "{{ done_var }}": true
+  when: checksum_path is exists

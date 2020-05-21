@@ -1,0 +1,7 @@
+---
+- name: Check cache_action
+  fail:
+    msg: Invalid cache action
+  when: (cache_action is undefined) or ((cache_action != 'validate') and (cache_action != 'invalidate') and (cache_action != 'update'))
+
+- include_tasks: "{{ cache_action }}_cache.yml"

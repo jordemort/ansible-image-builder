@@ -1,0 +1,4 @@
+---
+rootfs_cache_paths: [ "/mnt/workdir/roles/{{ os_role }}" ]
+rootfs_cache_variables: "{{ os_role }}"
+rootfs_cache_dependencies: [ "debootstrap" ]

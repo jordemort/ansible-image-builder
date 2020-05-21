@@ -1,0 +1,14 @@
+---
+cache_key: "{{ ansible_parent_role_names[0] }}"
+parent_role_path: "{{ ansible_parent_role_paths[0] }}"
+artifacts: "{{ lookup('vars', cache_key + '_artifacts', default=[ '/mnt/cache/' + cache_key]) }}"
+checksum_path: /mnt/cache/{{ cache_key }}.checksum
+checksum_var: "{{ cache_key }}_checksum"
+cached_var: "{{ cache_key }}_cached"
+done_var: "{{ cache_key }}_done"
+cache_variables: "{{ lookup('vars', cache_key + '_cache_variables', default=[]) }}"
+cache_paths: "{{ lookup('vars', cache_key + '_cache_paths', default=[]) }}"
+cache_dependencies: "{{ lookup('vars', cache_key + '_cache_dependencies', default=[]) }}"
+clean_env: "CLEAN_{{ cache_key | upper }}"
+clean_all: "{{ lookup('env', 'CLEAN_ALL') | default(false, true) | bool }}"
+force_clean: "{{ lookup('env', clean_env) | default(clean_all, true) | bool }}"

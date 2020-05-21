@@ -1,4 +1,0 @@
----
-cache_variables:
-  - "{{ debootstrap_suite }}"
-  - "{{ debootstrap_mirror }}"

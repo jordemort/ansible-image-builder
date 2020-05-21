@@ -1,6 +1,0 @@
----
-checksum_var: "{{ cache_key }}_checksum"
-cached_var: "{{ cache_key }}_cached"
-clean_env: "CLEAN_{{ cache_key | upper }}"
-clean_all: "{{ lookup('env', 'CLEAN_ALL') | default(false, true) | bool }}"
-force_clean: "{{ lookup('env', clean_env) | default(clean_all, true) | bool }}"

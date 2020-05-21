@@ -1,0 +1,2 @@
+---
+squashfs_cache_dependencies: [ "rootfs" ]
