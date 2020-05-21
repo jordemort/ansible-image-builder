@@ -35,13 +35,14 @@ ENV PATH=/usr/lib/caketop-builder/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/
 
 COPY ansible_hosts /etc/ansible/hosts
 COPY builder-playbook.yml /usr/lib/caketop-builder/ansible/builder-playbook.yml
-COPY caketop-builder /usr/lib/caketop-builder/bin/
+COPY caketop-builder caketop-checksum /usr/lib/caketop-builder/bin/
 COPY roles/ /usr/lib/caketop-builder/ansible/roles/
 COPY builders/ /usr/lib/caketop-builder/ansible/builders/
 
 ENV ANSIBLE_PIPELINING=True \
+    ANSIBLE_DISPLAY_SKIPPED_HOSTS=False \
     ANSIBLE_STDOUT_CALLBACK=yaml \
-    ANSIBLE_CALLBACK_WHITELIST=profile_roles,profile_tasks \
+    ANSIBLE_CALLBACK_WHITELIST=profile_roles \
     ANSIBLE_ROLES_PATH=/mnt/workdir/roles:/usr/lib/caketop-builder/ansible/builders:/usr/lib/caketop-builder/ansible/roles \
     ANSIBLE_STRATEGY_PLUGINS=/usr/lib/caketop-builder/lib/python3.7/site-packages/ansible_mitogen/plugins/strategy \
     ANSIBLE_STRATEGY=mitogen_linear
