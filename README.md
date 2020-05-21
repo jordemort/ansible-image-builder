@@ -53,6 +53,10 @@ Caketop OS is a live image based on Debian.
 
 ## Dev log
 
+### 2020-05-20
+
+- Re: GRUB & hybrid GPT/MBR: https://www.slivermetal.org/2016/09/18/how-to-create-an-hybrid-uefi-gpt-bios-gptmbr-boot-usb-disk/
+
 ### 2020-05-19
 
 - Re: splash screen/seamless transition
