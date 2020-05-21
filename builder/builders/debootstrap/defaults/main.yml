@@ -1,5 +1,4 @@
 ---
-clean_debootstrap: "{{ lookup('env', 'CLEAN_DEBOOTSTRAP') | default(false, true) | bool }}"
 debootstrap_include: "{{ lookup('env', 'DEBOOTSTRAP_INCLUDE') | default('ca-certificates,python3-minimal,python3-apt', true) }}"
 debootstrap_mirror: "{{ lookup('env', 'DEBOOTSTRAP_MIRROR') | default('http://deb.debian.org/debian/', true) }}"
 debootstrap_suite: "{{ lookup('env', 'DEBOOTSTRAP_SUITE') | default('buster', true) }}"

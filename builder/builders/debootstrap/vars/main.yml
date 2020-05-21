@@ -1,0 +1,6 @@
+---
+cache_variables:
+  - "{{ debootstrap_variant }}"
+  - "{{ debootstrap_include }}"
+  - "{{ debootstrap_suite }}"
+  - "{{ debootstrap_mirror }}"

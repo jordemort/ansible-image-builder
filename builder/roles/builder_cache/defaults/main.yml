@@ -1,0 +1,7 @@
+---
+cache_key: "{{ ansible_parent_role_names[0] }}"
+parent_role_path: "{{ ansible_parent_role_paths[0] }}"
+artifact_path: "/mnt/cache/{{ cache_key }}"
+checksum_path: "{{ artifact_path }}.checksum"
+dependencies_cached: true
+cache_variables:

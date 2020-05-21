@@ -1,20 +1,10 @@
 ---
-- block:
-
-  - name: Force rebuild of debootstrap
-    file:
-      state: absent
-      path: /mnt/cache/debootstrap.done
-
-  when: clean_debootstrap
+- import_role:
+    name: builder_cache
+  vars:
+    cache_action: validate
 
 - block:
-
-  - name: Clean debootstrap directory
-    file:
-      state: absent
-      path: /mnt/cache/debootstrap
-
   - name: Run debootstrap
     command:
       argv:
@@ -26,10 +16,8 @@
         - "{{ debootstrap_mirror }}"
       creates: /mnt/cache/debootstrap
     environment: "{{ proxy_env }}"
-
-  - name: Mark debootstrap as done
-    file:
-      state: touch
-      path: /mnt/cache/debootstrap.done
-
-  when: "'/mnt/cache/debootstrap.done' is not exists"
+  - import_role:
+      name: builder_cache
+    vars:
+      cache_action: update
+  when: not debootstrap_cached
