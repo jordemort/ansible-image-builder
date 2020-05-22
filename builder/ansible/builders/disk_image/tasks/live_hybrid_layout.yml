@@ -1,3 +1,4 @@
+---
 - name: Create and partition {{ disk_image_name }}
   command:
     argv:
