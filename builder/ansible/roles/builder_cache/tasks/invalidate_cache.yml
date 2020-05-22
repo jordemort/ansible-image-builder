@@ -1,16 +1,16 @@
 ---
-- name: Mark {{ cache_key }} as not done or cached
+- name: Mark {{ parent_role }} as not done or cached
   set_fact:
     "{{ cached_var }}": false
     "{{ done_var }}": false
 
-- name: Remove cached artifacts for {{ cache_key }}
+- name: Remove cached artifacts for {{ parent_role }}
   file:
     path: "{{ item }}"
     state: absent
   loop: "{{ artifacts }}"
 
-- name: Remove cached checksum for {{ cache_key }}
+- name: Remove cached checksum for {{ parent_role }}
   file:
     path: "{{ checksum_path }}"
     state: absent

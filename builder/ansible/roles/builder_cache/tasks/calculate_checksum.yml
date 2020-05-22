@@ -1,10 +1,10 @@
 ---
-- name: Calculate current checksum for {{ cache_key }}
+- name: Calculate current checksum for {{ parent_role }}
   command:
     argv: "{{ ['caketop-checksum', '-', parent_role_path] + cache_paths + artifacts }}"
     stdin: "{{ cache_variables | to_yaml }}"
   register: caketop_checksum
 
-- name: Remember checksum for {{ cache_key }}
+- name: Remember checksum for {{ parent_role }}
   set_fact:
     "{{ checksum_var }}": "{{ caketop_checksum.stdout | trim }}"
