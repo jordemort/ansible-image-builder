@@ -2,11 +2,21 @@
 - hosts: localhost
   any_errors_fatal: true
   gather_facts: false
+
   vars:
     build_root: "{{ lookup('env', 'BUILD_ROOT') | default('/mnt/cache', true) }}"
     builder: "{{ lookup('env', 'BUILDER') | default('disk_image', true) }}"
     product_name: "{{ lookup('env', 'PRODUCT_NAME') | default('Generic Appliance', true) }}"
     product_slug: "{{ lookup('env', 'PRODUCT_SLUG') | default('generic', true) }}"
+
   tasks:
+    - name: Get current architecture
+      command: dpkg --print-architecture
+      register: dpkg_architecture
+
+    - name: Store current architecture
+      set_fact:
+        os_architecture: "{{ dpkg_architecture.stdout | trim }}"
+
     - import_role:
         name: "{{ builder }}"

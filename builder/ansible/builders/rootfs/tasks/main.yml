@@ -18,15 +18,11 @@
       content: Acquire::http::Proxy "{{ proxy_env.http_proxy }}";
     when: acng_started
 
-  - name: Get current architecture
-    command: dpkg --print-architecture
-    register: dpkg_architecture
-
   - import_role:
       name: "{{ os_role }}"
     vars:
       proxy_env: "{{ proxy_env }}"
-      os_architecture: "{{ dpkg_architecture.stdout | trim }}"
+      os_architecture: "{{ os_architecture }}"
     delegate_to: rootfs
 
   - name: Remove apt proxy configuration
