@@ -1,4 +1,4 @@
 ---
 dependencies:
-  - role: rootfs
-    when: not (rootfs_done | default(false))
+  - role: squashfs
+    when: not (squashfs_done | default(false))
