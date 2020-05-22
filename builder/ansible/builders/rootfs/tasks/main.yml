@@ -10,11 +10,11 @@
     when: not (acng_done | default(false))
 
   - name: Copy debootstrap
-    command: cp -a /mnt/cache/debootstrap /mnt/cache/rootfs
+    command: cp -a {{ build_root }}/debootstrap {{ build_root }}/rootfs
 
   - name: Create apt proxy configuration
     copy:
-      dest: /mnt/cache/rootfs/etc/apt/apt.conf.d/99-caketop.conf
+      dest: "{{ build_root }}/rootfs/etc/apt/apt.conf.d/99-caketop.conf"
       content: Acquire::http::Proxy "{{ proxy_env.http_proxy }}";
     when: acng_started
 
@@ -31,7 +31,7 @@
 
   - name: Remove apt proxy configuration
     file:
-      path: /mnt/cache/rootfs/etc/apt/apt.conf.d/99-caketop.conf
+      path: "{{ build_root }}/rootfs/etc/apt/apt.conf.d/99-caketop.conf"
       state: absent
     when: acng_started
 

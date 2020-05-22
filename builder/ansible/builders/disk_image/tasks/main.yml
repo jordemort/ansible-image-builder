@@ -1,16 +1,53 @@
 ---
-- file:
-    state: absent
-    path: /mnt/cache/{{ disk_image_name }}
-  when: clean_disk_image
+- import_role:
+    name: builder_cache
+  vars:
+    cache_action: validate
 
-- name: Create {{ disk_image_name }}
-  command:
-    cmd: /usr/bin/guestfish
-    stdin: |
-      disk-create /mnt/cache/{{ disk_image_name }} raw {{ disk_image_size }} preallocation:sparse
-      add /mnt/cache/{{ disk_image_name }} readonly:false format:raw
-      run
-      part-disk /dev/sda mbr
-      mkfs vfat /dev/sda1
-    creates: /mnt/cache/{{ disk_image_name }}
+- block:
+  - name: Create {{ disk_image_name }}
+    command:
+      argv:
+        - truncate
+        - --size={{ disk_image_size }}
+        - "{{ build_root }}/{{ disk_image_name }}"
+
+  - name: Partition {{ disk_image_name }}
+    command:
+      argv:
+        - sgdisk
+        - --new=1:0:+1M
+        - --typecode=1:EF02
+        - --change-name=1:BIOSBOOT
+        - --new=2:0:-1
+        - --typecode=2:EF00
+        - --change-name=2:SYSTEM
+        - --hybrid=2
+        - "{{ build_root }}/{{ disk_image_name }}"
+
+  - name: Create {{ disk_image_name }} and copy in squashfs
+    command:
+      cmd: /usr/bin/guestfish
+      stdin: |
+        add {{ build_root }}/squashfs readonly:true format:raw
+        add {{ build_root }}/{{ disk_image_name }} readonly:false format:raw
+        run
+
+        mount /dev/sda /
+        mkfs vfat /dev/sdb2
+        mount /dev/sdb2 /mnt
+
+        mkdir /mnt/{{ product_slug }}
+        copy-in {{ build_root }}/squashfs /mnt/{{ product_slug }}
+        mv /mnt/{{ product_slug }}/squashfs /mnt/{{ product_slug }}/{{ product_slug }}.squashfs
+
+        mkdir /mnt/boot
+        mkdir /mnt/efi
+        command "grub-install --target=x86_64-efi --efi-directory=/mnt/efi --boot-directory=/mnt/boot --removable --recheck"
+        command "grub-install --target=i386-pc --boot-directory=/mnt/boot --recheck /dev/sdb"
+
+  - import_role:
+      name: builder_cache
+    vars:
+      cache_action: update
+  when: not disk_image_cached

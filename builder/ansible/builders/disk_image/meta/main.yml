@@ -1,3 +1,4 @@
 ---
 dependencies:
-  - role: system_image
+  - role: rootfs
+    when: not (rootfs_done | default(false))

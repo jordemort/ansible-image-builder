@@ -1,4 +1,4 @@
 ---
-clean_disk_image: "{{ lookup('env', 'CLEAN_DISK_IMAGE') | default(false, true) | bool }}"
+disk_image_name: "{{ lookup('env', 'DISK_IMAGE_NAME') | default(product_slug + '.img', true) }}"
 disk_image_size: "{{ lookup('env', 'DISK_IMAGE_SIZE') | default('4G', true) }}"
-disk_image_name: "{{ lookup('env', 'DISK_IMAGE_NAME') | default('caketop.img', true) }}"
+disk_image_partition_table: "{{ lookup('env', 'DISK_IMAGE_PARTITION_TABLE') | default('gpt', true) }}"

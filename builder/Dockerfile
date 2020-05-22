@@ -10,8 +10,10 @@ RUN apt-get update && \
       ca-certificates \
       debootstrap \
       dumb-init \
+      gdisk \
       libguestfs-tools \
       mtree-netbsd \
+      pigz \
       python3-dev \
       python3-pip \
       python3-setuptools \
@@ -39,7 +41,7 @@ ENV ANSIBLE_PIPELINING=True \
     ANSIBLE_STRATEGY_PLUGINS=/usr/lib/caketop-builder/lib/python3.7/site-packages/ansible_mitogen/plugins/strategy \
     ANSIBLE_STRATEGY=mitogen_linear
 
-VOLUME [ "/mnt/cache", "/mnt/workdir", "/var/cache/apt-cacher-ng" ]
+VOLUME [ "/mnt/cache", "/mnt/workdir", "/var/cache/apt-cacher-ng", "/var/tmp" ]
 WORKDIR /mnt/workdir
 ENTRYPOINT [ "/usr/bin/dumb-init" ]
 CMD [ "caketop-builder"]

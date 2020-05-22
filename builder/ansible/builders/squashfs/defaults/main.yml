@@ -1,0 +1,2 @@
+---
+squashfs_compression: "{{ lookup('env', 'SQUASHFS_COMPRESSION') | default('zstd', true) }}"

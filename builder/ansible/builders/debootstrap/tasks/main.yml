@@ -16,9 +16,9 @@
         - --variant=minbase
         - --include=ca-certificates,python3-minimal,python3-apt
         - "{{ debootstrap_suite }}"
-        - /mnt/cache/debootstrap
+        - "{{ build_root }}/debootstrap"
         - "{{ debootstrap_mirror }}"
-      creates: /mnt/cache/debootstrap
+      creates: "{{ build_root }}/debootstrap"
     environment: "{{ proxy_env }}"
 
   - import_role:

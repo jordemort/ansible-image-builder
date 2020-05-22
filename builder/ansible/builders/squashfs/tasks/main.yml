@@ -8,10 +8,10 @@
   - command:
       argv:
         - mksquashfs
-        - /mnt/cache/rootfs
-        - /mnt/cache/squashfs
+        - "{{ build_root }}/rootfs"
+        - "{{ build_root }}/squashfs"
         - -comp
-        - zstd
+        - "{{ squashfs_compression }}"
 
   - import_role:
       name: builder_cache

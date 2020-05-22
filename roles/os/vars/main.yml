@@ -1,5 +1,7 @@
 ---
-os_packages: []
+os_packages:
+  - live-boot
+  
 amd64_packages:
   - grub-pc-bin
   - grub-efi-amd64

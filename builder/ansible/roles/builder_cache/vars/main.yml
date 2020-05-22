@@ -1,8 +1,8 @@
 ---
 cache_key: "{{ ansible_parent_role_names[0] }}"
 parent_role_path: "{{ ansible_parent_role_paths[0] }}"
-artifacts: "{{ lookup('vars', cache_key + '_artifacts', default=[ '/mnt/cache/' + cache_key]) }}"
-checksum_path: /mnt/cache/{{ cache_key }}.checksum
+artifacts: "{{ lookup('vars', cache_key + '_artifacts', default=[build_root + '/' + cache_key]) }}"
+checksum_path: "{{ build_root }}/{{ cache_key }}.checksum"
 checksum_var: "{{ cache_key }}_checksum"
 cached_var: "{{ cache_key }}_cached"
 done_var: "{{ cache_key }}_done"

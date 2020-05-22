@@ -3,7 +3,10 @@
   any_errors_fatal: true
   gather_facts: false
   vars:
+    build_root: "{{ lookup('env', 'BUILD_ROOT') | default('/mnt/cache', true) }}"
     builder: "{{ lookup('env', 'BUILDER') | default('disk_image', true) }}"
+    product_name: "{{ lookup('env', 'PRODUCT_NAME') | default('Generic Appliance', true) }}"
+    product_slug: "{{ lookup('env', 'PRODUCT_SLUG') | default('generic', true) }}"
   tasks:
     - import_role:
         name: "{{ builder }}"

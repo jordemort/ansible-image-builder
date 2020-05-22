@@ -1,0 +1,3 @@
+---
+disk_image_artifacts: [ "{{ build_root }}/{{ disk_image_name }}" ]
+disk_image_cache_dependencies: [ "rootfs" ]
