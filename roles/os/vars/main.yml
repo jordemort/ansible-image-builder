@@ -1,7 +1,8 @@
 ---
 os_packages:
   - live-boot
-  
+
 amd64_packages:
   - grub-pc-bin
   - grub-efi-amd64
+  - linux-image-amd64

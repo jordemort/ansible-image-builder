@@ -4,7 +4,7 @@
       - sgdisk
       - --new=1:0:+1M
       - --typecode=1:EF02
-      - --change-name=1:BIOSBOOT
+      - --change-name=1:Lecacy Boot
       - --new=2:0:-1
       - --typecode=2:EF00
       - --change-name=2:{{ product_name }}
@@ -23,11 +23,12 @@
       mkfs vfat /dev/sdb2
       mount /dev/sdb2 /mnt
 
-      mkdir /mnt/{{ product_slug }}
-      copy-in {{ build_root }}/squashfs /mnt/{{ product_slug }}
-      mv /mnt/{{ product_slug }}/squashfs /mnt/{{ product_slug }}/{{ product_slug }}.squashfs
-
       mkdir /mnt/boot
+      copy-in {{ build_root }}/squashfs /mnt/boot
+      mv /mnt/boot/squashfs /mnt/boot/{{ product_slug }}.squashfs
+      cp /vmlinuz /mnt/boot/kernel.img
+      cp /initrd.img /mnt/boot/initrd.img
+
       mkdir /mnt/efi
       command "grub-install --target=x86_64-efi --efi-directory=/mnt --boot-directory=/mnt/boot --removable --recheck"
       command "grub-install --target=i386-pc --boot-directory=/mnt/boot --recheck /dev/sdb"
