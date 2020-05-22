@@ -1,4 +1,4 @@
 ---
 disk_image_layout: "{{ lookup('env', 'DISK_IMAGE_LAYOUT') | default('hybrid', true) }}"
-disk_image_name: "{{ lookup('env', 'DISK_IMAGE_NAME') | default(product_slug + '-' + disk_image_layout '-' + os_architecture + '.img', true) }}"
+disk_image_name: "{{ lookup('env', 'DISK_IMAGE_NAME') | default(product_slug + '-' + disk_image_layout + '-' + os_architecture + '.img', true) }}"
 disk_image_size: "{{ lookup('env', 'DISK_IMAGE_SIZE') | default('4G', true) }}"
