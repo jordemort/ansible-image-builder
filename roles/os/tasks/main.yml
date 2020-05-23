@@ -7,4 +7,23 @@
     install_recommends: false
     autoclean: true
 
-- command: dpkg-query --list
+- name: Create {{ product_slug }} group
+  group:
+    name: "{{ product_slug }}"
+    gid: 1000
+    state: present
+
+- name: Create {{ product_slug }} user
+  user:
+    name: "{{ product_slug }}"
+    password: "{{ product_slug | password_hash('sha512', (999999999999 | random | to_uuid)) }}"
+    uid: 1000
+    group: "{{ product_slug }}"
+    comment: "{{ product_name }} User"
+    create_home: true
+    shell: /bin/bash
+
+- name: Add {{ product_slug }} to sudo
+  copy:
+    dest: /etc/sudoers.d/{{ product_slug }}
+    content: "{{ product_slug }} ALL=(ALL) NOPASSWD:ALL"

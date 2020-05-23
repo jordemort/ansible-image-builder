@@ -31,6 +31,11 @@
       state: absent
     when: acng_started
 
+  - name: Set hostname
+    copy:
+      dest: "{{ build_root }}/rootfs/etc/hostname"
+      content: "{{ product_slug }}"
+
   - import_role:
       name: builder_cache
     vars:

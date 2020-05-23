@@ -14,8 +14,28 @@
 
   - include_tasks: "{{ disk_image_layout }}_layout.yml"
 
+  - name: Compress {{ disk_image_name }}
+    command:
+      argv:
+        - pigz
+        - -k
+        - "{{ build_root}}/{{ disk_image_name }}"
+
   - import_role:
       name: builder_cache
     vars:
       cache_action: update
   when: not disk_image_cached
+
+- name: Ensure output directory exists
+  file:
+    path: /mnt/workdir/out
+    state: directory
+  when: "'/mnt/workdir/out' is not exists"
+
+- name: Copy {{ disk_image_name }}.gz
+  command:
+    argv:
+      - cp
+      - "{{ build_root }}/{{ disk_image_name }}.gz"
+      - /mnt/workdir/out

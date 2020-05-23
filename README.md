@@ -2,13 +2,21 @@
 
 Caketop OS is a live image based on Debian.
 
+## Quickstart
+
+```bash
+docker-compose build
+docker-compose run --rm builder
+ls out/  # you should have an image
+```
+
 ## TODO
 
- - [ ] Name all Ansible tasks
- - [ ] Write & compare checksums
- - [ ] Artifacts
- - [ ] Cache guestfs stuff in volume
- - [ ] Build bootable image on FAT for removable media
+ - [x] Name all Ansible tasks
+ - [x] Write & compare checksums
+ - [x] Artifacts
+ - [x] Cache guestfs stuff in volume
+ - [x] Build bootable image on FAT for removable media
  - [ ] posixovl over FAT
  - [ ] Seamless transition from plymouth to alacritty
  - [ ] udiskie & gvfs
@@ -52,6 +60,10 @@ Caketop OS is a live image based on Debian.
  - [ ] Better builder CLI
 
 ## Dev log
+
+### 2020-05-22
+
+- Bootable on amd64
 
 ### 2020-05-20
 

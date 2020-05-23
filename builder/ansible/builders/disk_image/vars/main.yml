@@ -1,4 +1,7 @@
 ---
-disk_image_artifacts: [ "{{ build_root }}/{{ disk_image_name }}" ]
+disk_image_artifacts:
+  - "{{ build_root }}/{{ disk_image_name }}"
+  - "{{ build_root }}/grub.cfg"
+  - "{{ build_root }}/{{ disk_image_name }}.gz"
 disk_image_cache_dependencies: [ "rootfs" ]
 disk_image_cache_key: disk_image_{{ disk_image_layout }}

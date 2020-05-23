@@ -1,13 +1,18 @@
 ---
+- name: Generate GRUB configuration
+  template:
+    src: grub.cfg.j2
+    dest: "{{ build_root }}/grub.cfg"
+
 - name: Create and partition {{ disk_image_name }}
   command:
     argv:
       - sgdisk
       - --new=1:0:+1M
       - --typecode=1:EF02
-      - --change-name=1:Lecacy Boot
+      - --change-name=1:Legacy Boot
       - --new=2:0:-1
-      - --typecode=2:EF00
+      - --typecode=2:0700
       - --change-name=2:{{ product_name }}
       - --hybrid=2
       - "{{ build_root }}/{{ disk_image_name }}"
@@ -24,8 +29,9 @@
       mkfs vfat /dev/sdb2
       mount /dev/sdb2 /mnt
 
-      mkdir /mnt/boot
+      mkdir_p /mnt/boot/grub
       copy-in {{ build_root }}/squashfs /mnt/boot
+      copy-in {{ build_root }}/grub.cfg /mnt/boot/grub
       mv /mnt/boot/squashfs /mnt/boot/{{ product_slug }}.squashfs
       cp /vmlinuz /mnt/boot/kernel.img
       cp /initrd.img /mnt/boot/initrd.img

@@ -1,0 +1,32 @@
+# Setup video
+if [ "$grub_platform" = "efi" ]
+then
+    insmod efi_gop
+    insmod efi_uga
+fi
+
+if [ "$grub_platform" = "pc" ]
+then
+    insmod vbe
+fi
+
+# Setup font
+insmod font
+
+if loadfont ${prefix}/fonts/unicode.pf2
+then
+    insmod gfxterm
+    set gfxmode=auto
+    set gfxpayload=keep
+    terminal_output gfxterm
+fi
+
+menuentry "{{ product_name }}" {
+  linux ($root)/boot/kernel.img boot=live live-media-path=/boot ip=frommedia components quiet splash
+  initrd ($root)/boot/initrd.img
+}
+
+menuentry "{{ product_name }} (safe mode)" {
+  linux ($root)/boot/kernel.img boot=live live-media-path=/boot ip=frommedia components memtest noapic noapm nodma nomce nolapic nomodeset nosmp nosplash vga=normal
+  initrd ($root)/boot/initrd.img
+}

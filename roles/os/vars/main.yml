@@ -1,8 +1,36 @@
 ---
 os_packages:
+  - bluez
+  - bzip2
+  - connman
+  - curl
+  - dnsutils
+  - iproute2
+  - iputils-ping
+  - jq
+  - less
+  - links
   - live-boot
+  - lsof
+  - man-db
+  - nano
+  - net-tools
+  - openssh-client
+  - plymouth
+  - plymouth-themes
+  - procps
+  - psmisc
+  - sudo
+  - systemd
+  - systemd-sysv
+  - traceroute
+  - vim-tiny
+  - wget
+  - wpasupplicant
+  - xz-utils
 
 amd64_packages:
+  - gdisk
   - grub-pc-bin
   - grub-efi-amd64
   - linux-image-amd64
