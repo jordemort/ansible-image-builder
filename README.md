@@ -1,6 +1,6 @@
-# Caketop OS
+# Ansible Image Builder
 
-Caketop OS is a live image based on Debian.
+This repository uses Ansible to build a live image based on Debian.
 
 ## Quickstart
 
